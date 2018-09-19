@@ -1,0 +1,109 @@
+Install and configure OSSEC with Agentless mode
+
+Author: demonalex (chaoyi.huang@connect.polyu.hk)
+Date: Sept 18, 2018
+
+
+[Installing OSSEC]
+#cd /usr/local/sbin
+#wget https://github.com/ossec/ossec-hids/archive/2.9.3.tar.gz
+#tar -zxvf ./2.9.3.tar.gz
+#cd ossec-hids-2.9.3/
+#./install.sh
+
+
+[Initialize OSSEC's setting]
+For English type : en
+What kind of installation do you want (server,agent,local.hybrid): server
+Choose wghere to install the OSSEC-HIDS [/var/ossec]: /var/ossec
+Do you want email notification: n
+Do you want to run the integrity check daemon: y
+Do you want to run the rootkit detection engine: y
+Do you want to enable active response: n
+Do you want to enable remote syslog (port 514 udp): y
+
+
+[Primary files]
+/var/ossec/bin/ossec-control					#Main Application
+/var/ossec/etc/ossec.conf						#Main Configuration File
+/var/ossec/bin/manage_agents					#Agent Management Program
+/var/ossec/agentless/register_host.sh			#Agentless Host Registration Program
+/var/ossec/logs/ossec.log						#Main Log File
+/var/ossec/logs/alerts/alerts.log				#Alert Log File
+
+
+[Executing OSSEC]
+#/var/ossec/bin/ossec-control start
+#ps -aef|grep ossec
+ossec      747     1  0 May11 ?        00:01:03 /var/ossec/bin/ossec-analysisd
+root       753     1  0 May11 ?        00:04:50 /var/ossec/bin/ossec-logcollector
+root       765     1  0 May11 ?        01:18:33 /var/ossec/bin/ossec-syscheckd
+ossec      789     1  0 May11 ?        00:00:08 /var/ossec/bin/ossec-monitord
+
+
+[Adding more agents]
+#/var/ossec/agentless/register_host.sh add root@192.168.1.189
+After entering the password associated with the agent, utilize the following command to show the agent just added in the system.
+#/var/ossec/agentless/register_host.sh list
+*Available hosts:
+root@192.168.1.189
+
+
+[Configuring the Agentless mode]
+#vi /var/ossec/etc/ossec.conf
+Add the following content between <ossec_config> and </ossec_config> before saving and exiting VI:
+<agentless>
+	<type>ssh_integrity_check_linux</type>
+	<frequency>3600</frequency>
+	<host>root@192.168.1.189</host>
+	<state>periodic</state>
+	<arguments>/bin /etc/ /sbin</arguments>
+</agentless>
+<agentless>
+	<type>ssh_generic_diff</type>
+	<frequency>3600</frequency>
+	<host>root@192.168.1.189</host>
+	<state>periodic_diff</state>
+	<arguments>ls -la /etc; cat /etc/passwd</arguments>
+</agentless>
+
+
+[Restarting OSSEC with Agentless mode]
+#/var/ossec/bin/ossec-control enable agentless
+#/var/ossec/bin/ossec-control restart
+#ps -aef|grep -i ossec
+ossec    21845     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-agentlessd
+ossec    21855     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-analysisd
+root     21859     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-logcollector
+ossecr   21866     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-remoted
+root     21871     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-syscheckd
+ossec    21875     1  0 16:47 ?        00:00:00 /var/ossec/bin/ossec-monitord
+
+
+[Configuring Remote Syslog Pushing]
+#vi /var/ossec/etc/ossec.conf
+Add the following content between <ossec_config> and </ossec_config> before saving and exiting VI:
+<syslog_output>
+	<server>192.168.1.35</server>
+	<port>115</port>
+</syslog_output>
+
+
+[Restarting OSSEC with Syslog Pushing]
+#/var/ossec/bin/ossec-control enable client-syslog
+#/var/ossec/bin/ossec-control restart
+
+
+[Checking if there is any issue]
+#tail -n 10 -f /var/ossec/logs/ossec.log
+
+
+[Checking the detail of any alert]
+#tail -n 30 -f /var/ossec/logs/alerts/alerts.log
+
+
+[Setting up update-rc.d]
+#update-rc.d ossec enable 3 5
+
+
+
