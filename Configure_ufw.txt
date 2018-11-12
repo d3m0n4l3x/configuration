@@ -1,0 +1,46 @@
+Summarized instruction of the ufw in Kali
+
+
+The ufw is a front-end of Iptables, and the gufw offers a GUI for the ufw.
+The instuction below shows how to install and tweak the ufw in Kali.
+
+/* Installation: */
+# apt-get update
+# apt-get install ufw gufw
+
+/* Enable ufw */
+# ufw enable
+
+/* Disable ufw */
+# ufw disable
+
+/* Add rules */
+# ufw allow from 192.168.0.251
+# ufw deny 80/tcp
+
+/* Delete rules */
+# ufw delete allow from 192.168.0.251
+
+/* Reload ufw */
+# ufw reload
+
+/* Delet rules and disable ufw */
+# ufw reset
+
+/* Check current status */
+# ufw status verbose
+
+/* Check ufw logs */
+# tail -n 30 -f /var/log/messages
+
+/* Start on boot */
+# vi /etc/rc.local
+/usr/sbin/ufw enable
+/usr/sbin/ufw allow from 192.168.0.251
+/usr/sbin/ufw deny 80/tcp
+/usr/sbin/ufw allow 79:81/tcp
+/usr/sbin/ufw deny in on eth0
+/usr/sbin/ufw allow out on eth0
+[ESC]:ZZ
+
+
