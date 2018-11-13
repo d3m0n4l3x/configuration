@@ -30,6 +30,9 @@ The instuction below shows how to install and tweak the ufw in Kali.
 /* Check current status */
 # ufw status verbose
 
+/* Enable ufw logging */
+# ufw logging medium
+
 /* Check ufw logs */
 # tail -n 30 -f /var/log/messages
 
