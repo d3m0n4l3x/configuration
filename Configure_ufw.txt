@@ -38,6 +38,7 @@ The instuction below shows how to install and tweak the ufw in Kali.
 
 /* Start on boot */
 # vi /etc/rc.local
+/usr/sbin/ufw reset
 /usr/sbin/ufw enable
 /usr/sbin/ufw allow from 192.168.0.251
 /usr/sbin/ufw deny 80/tcp
