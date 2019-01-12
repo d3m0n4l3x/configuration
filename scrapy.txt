@@ -1,0 +1,79 @@
+Install and execute Scrapy in order to find those pages containing specific keywords
+
+
+
+[Install Scrapy]:
+#apt-get update
+#apt-get install python3-scrapy
+
+
+[Set up a spider]:
+#scrapy startproject search_keywords              '''Here we create a project call search_keywords
+#cd search_keywords
+#scrapy genspider demonalex demonalex.com         '''Here we create a spider called demonalex
+#cd search_keywords/spiders
+#cp ./demonalex.py ./demonalex_py.bak
+
+
+[Modify the spider script]:
+#vi ./demonalex.py                                '''Modify the content of the spider script called demonalex.py
+--------------------------------
+from io import StringIO
+from functools import partial
+from scrapy.http import Request
+from scrapy.spiders import BaseSpider
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.linkextractors import LinkExtractor
+from scrapy.item import Item
+
+def find_all_substrings(string, sub):
+
+    import re
+    starts = [match.start() for match in re.finditer(re.escape(sub), string)]
+    return starts
+
+class WebsiteSpider(CrawlSpider):
+
+    name = "demonalex"                                                '''The name of the spider
+    allowed_domains = ["www.phooky.com"]                              '''Here we define the domain name being crawled
+    start_urls = ["http://www.phooky.com"]                            '''Here we define the start point being scanned
+    rules = [Rule(LinkExtractor(), follow=True, callback="check_buzzwords")]
+
+    crawl_count = 0
+    words_found = 0                                 
+
+    def check_buzzwords(self, response):
+
+        self.__class__.crawl_count += 1
+
+        crawl_count = self.__class__.crawl_count
+
+        wordlist = [                                                   '''This is a keyword list.
+            "Lorem",
+            "dolores",
+            "feugiat",
+            ]
+
+        url = response.url
+        contenttype = response.headers.get("content-type", "").decode('utf-8').lower()
+        data = response.body.decode('utf-8')
+
+        for word in wordlist:
+                substrings = find_all_substrings(data, word)
+                for pos in substrings:
+                        ok = False
+                        if not ok:
+                                self.__class__.words_found += 1
+                                print(word + ";" + url + ";")
+        return Item()
+
+    def _requests_to_follow(self, response):
+        if getattr(response, "encoding", None) != None:
+                return CrawlSpider._requests_to_follow(self, response)
+        else:
+                return []
+--------------------------------
+
+
+[Executing the spider]:
+#scrapy crawl demonalex
