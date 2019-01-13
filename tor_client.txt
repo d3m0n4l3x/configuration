@@ -1,0 +1,20 @@
+Set up and use Tor Client in Kali
+
+
+[Install Tor Client in Kali]:
+#apt-get update
+#apt-cache search tor|grep '^tor'
+#apt-get install tor
+
+
+[Start Tor service]:
+#/etc/init.d/tor start
+
+
+[How to use Tor service through regular browsers]:
+Point the SOCKv5 proxy to 127.0.0.1:9050, and check the option of "Using Sockv5 Proxy's DNS function".
+
+
+[Use the following websites to verify if you are in Darknet]:
+http://xmh57jrzrnw6insl.onion/             '''A Tor Search Engine
+http://torlinkbgs6aabns.onion/             '''A darknet yellow book
