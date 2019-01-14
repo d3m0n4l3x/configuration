@@ -1,0 +1,11 @@
+Launching a reconnaissance in Kali
+
+#whois aaa.com
+#dig aaa.com soa
+#dig aaa.com ns
+#dig aaa.com a
+#dig aaa.com mx
+#dig aaa.com txt
+#fierce -dns aaa.com
+#dnsrecon -d aaa.com -a --iw -z
+#theharvester -d aaa.com -b all -l 1000 -h
