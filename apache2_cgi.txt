@@ -1,0 +1,24 @@
+Enable Perl-CGI at Apache2
+
+
+Enable CGI:
+#ln -s /etc/apache2/conf-available/serve-cgi-bin.conf /etc/apache2/conf-enabled/serve-cgi-bin.conf
+#ln -s /etc/apache2/mods-available/cgi.load /etc/apache2/mods-enabled/cgi.load
+
+Add a CGI script:
+#touch /usr/lib/cgi-bin/test.pl
+#vi /usr/lib/cgi-bin/test.pl
+-----------------------------
+#!/usr/bin/perl
+print "Content-type: text/html\n\n";
+print "Testing";
+:wq!
+-----------------------------
+#cd /usr/lib
+#chmod -R +x ./cgi-bin
+
+Restart Apache2:
+#systemctl restart apache2.service
+
+Verify:
+Access http://127.0.0.1/cgi-bin/test.pl
