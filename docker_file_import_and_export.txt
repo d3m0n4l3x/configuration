@@ -1,0 +1,16 @@
+Export Image:
+#docker save [OPTIONS] IMAGE [IMAGE...]
+Example:
+#docker save busybox > busybox.tar
+
+
+Import Image:
+#docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]
+Example:
+#docker import /path/to/exampleimage.tgz
+
+
+Load Image from Files:
+#docker load [OPTIONS]
+Example:
+#docker load < busybox.tar.gz
