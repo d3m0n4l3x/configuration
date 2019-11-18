@@ -1,0 +1,7 @@
+Installing KVM at Kali Linux
+
+#apt-get update
+#apt install -y qemu-kvm libvirt0 virt-manager libguestfs-tools bridge-utils
+#mkdir -p /var/lib/libvirt/iso
+#cp ~/Downloads/*.iso /var/lib/libvirt/iso
+#virt-manager
