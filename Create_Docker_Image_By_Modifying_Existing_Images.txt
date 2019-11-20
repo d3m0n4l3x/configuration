@@ -1,0 +1,18 @@
+Create a Docker image by modifying existing images
+
+There are two ways to create a new Docker image, and they are shown below:
+- Create images by modifying existing images
+- Create images by utilizing Dockerfiles
+
+This document is to demonstrate how to create images by modifying existing images (P.S.: The following example shows how to modify an existing image named httpd and save it as a new image named demonalex/httpd:2)
+#systemctl start docker
+#docker run -it httpd /bin/bash
+After modifying the image, execute the following commands:
+#docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+884fa8ecd4bd        httpd               "/bin/bash"         8 minutes ago       Up 8 minutes        80/tcp   hardcore_aryabhata
+#docker commit 884fa8ecd4bd demonalex/httpd:2
+#docker images|grep httpd
+demonalex/httpd                   2                   a6a8c482adec        41 seconds ago      205MB
+httpd                             latest              19459a872194        2 months ago        154MB
+#docker run -it demonalex/httpd:2 /bin/bash
