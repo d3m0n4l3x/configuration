@@ -1,0 +1,21 @@
+Quick Set up NGINX with Modsecurity through Docker
+
+
+Reference: https://hub.docker.com/r/owasp/modsecurity-crs
+
+1) Pull the docker image first:
+#/etc/init.d/docker start
+#docker pull owasp/modsecurity-crs
+
+2) Suppose Apache2 is running on the TCP81 of the server, and execute the following commands:
+#/etc/init.d/apache2 start
+
+3) Run the image:
+#docker run -d -p 80:80 -e PARANOIA=5 -e PROXY=1 -e PROXYLOCATION=[URL] owasp/modsecurity-crs
+Example:
+#docker run -d -p 80:80 -e PARANOIA=5 -e PROXY=1 -e PROXYLOCATION=http://8.8.8.8:81/ owasp/modsecurity-crs
+
+4) Check Modsecurity's log:
+#docker exec -it [CONTAINER NAME] tail -n 30 -f /var/log/modsec_audit.log
+Example:
+#docker exec -it sweet_swartz tail -n 30 -f /var/log/modsec_audit.log
