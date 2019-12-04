@@ -1,7 +1,7 @@
 Deploy SSL Offloading Reverse Proxy through Docker and NGINX
 
 
-Reference:
+References:
 1)https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
 2)https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-http/?_ga=2.180791975.1262112524.1575417960-988469526.1575417960
 
