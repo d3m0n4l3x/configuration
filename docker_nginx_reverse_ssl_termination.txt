@@ -1,0 +1,63 @@
+Deploy SSL Offloading Reverse Proxy through Docker and NGINX
+
+
+Reference:
+1)https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+2)https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-http/?_ga=2.180791975.1262112524.1575417960-988469526.1575417960
+
+
+Test NGNIX docker:
+#/etc/init.d/docker start
+#docker pull nginx
+#docker run -it nginx /bin/bash
+
+
+Install essential software:
+docker#apt-get update ; apt-get install net-tools vim openssl file
+
+
+Generate SSL certificate and the key:
+docker#openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/certs/key.pem -x509 -days 365 -out /etc/ssl/certs/certificate.pem
+
+
+Modify the nginx.conf file:
+docker#cd /etc/nginx
+docker#cp ./nginx.conf ./nginx.conf.bak
+docker#vi ./nginx.conf
+Change the content of the nginx.conf to the content as follows:
+---------------------------
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+stream {
+    upstream stream_backend {
+         server 8.8.8.8:81;
+    }
+
+    server {
+        listen                443 ssl;
+        proxy_pass            stream_backend;
+
+        ssl_certificate       /etc/ssl/certs/certificate.pem;
+        ssl_certificate_key   /etc/ssl/certs/key.pem;
+        ssl_protocols         SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers           HIGH:!aNULL:!MD5;
+        ssl_session_cache     shared:SSL:20m;
+        ssl_session_timeout   4h;
+        ssl_handshake_timeout 30s;
+     }
+}
+---------------------------
+:wq!
+docker#/etc/init.d/nginx start
+
+
+Create a new docker image:
+#docker commit [CONTAINER ID] demonalex/nginx
