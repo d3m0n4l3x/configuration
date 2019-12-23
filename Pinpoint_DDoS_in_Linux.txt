@@ -1,0 +1,14 @@
+Utilize several commands to pinpoint DDoS in Linux environments
+
+1) First leverage the ifstat command to confirm the presence of DDoS:
+#ifstat
+OR
+#ifstat -i INTERFACE
+
+2) Then utilize either the iftop or iptraf to uncover the service under the attack:
+#iftop -i INTERFACE
+OR
+#iptraf -i INTERFACE
+
+3) If this is a client PC, leverage the nethogs command to determine which process is ocuppying the bandwidth.
+#nethogs INTERFACE
