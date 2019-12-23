@@ -1,0 +1,12 @@
+The ngrep command makes NIDS become NIPS
+
+1) Suppose the source sending out malicious packets has been confirmed, use the ngrep command:
+#ngrep -d any -q -K 10 host 192.168.1.10
+#ngrep -d any -q -K 10 port 8080
+#ngrep -d any -q -K 10 host 192.168.1.10 and port 22
+
+2) If a malicious snippet of those malicious packets has been identified, leverage the ngrep command:
+#ngrep -d wlan0 -q -K 10 "^GET .* HTTP/1.[01]" "host www.google.es"
+#ngrep -d any -q -K 10 “abcd” icmp
+
+Bear in mind that the parameter, -d, is followed by the network interface, and -K is followed by a value representing how many RST packets would be sent to terminate the corresponding connections. The parameter, -q, shows that the application is running on the quiet mode.
