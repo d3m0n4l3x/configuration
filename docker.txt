@@ -83,3 +83,13 @@ Such as:
 
 Delete a docker:
 #docker rmi -f httpd
+
+
+Copy files between containers and the host machine:
+#docker cp CONTAINER_ID:FILE FILE
+Or:
+#docker cp FILE CONTAINER_ID:FILE
+Here are examples:
+#docker cp /root/foo.txt 72ca2488b353:/root/foo.txt
+#docker cp 72ca2488b353:/root/foo.txt /root/foo.txt
+
