@@ -1,0 +1,14 @@
+root@demonalex:~/test# apt-get update
+root@demonalex:~/test# apt-get install mingw-w64
+root@demonalex:~/test# cat ./test.c
+#include "stdio.h"
+int main(){
+	printf("hello world!\n");
+}
+root@demonalex:~/test# /usr/bin/i686-w64-mingw32-gcc-win32 -o test.exe ./test.c
+root@demonalex:~/test# file ./test.exe
+./test.exe: PE32 executable (console) Intel 80386, for MS Windows
+root@demonalex:~/test# wine ./test.exe
+hello world!
+
+

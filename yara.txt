@@ -1,0 +1,22 @@
+Install and use YARA
+
+
+Install and initialize YARA:
+#apt-get update
+#apt-get install yara
+#mkdir -p /usr/local/sbin/yara/rules
+#mkdir -p /usr/local/sbin/yara/samples
+
+
+Update YARA rules:
+#cd /usr/local/sbin/yara/rules
+#git init
+#git pull https://github.com/Yara-Rules/rules.git
+
+
+Use YARA to scan:
+#cp /root/test/test2.exe /root/test/test3.exe /usr/local/sbin/yara/samples
+#yara -r -w -f -g -p 10 /usr/local/sbin/yara/rules/index.yar /usr/local/sbin/yara/samples/
+
+
+More rules can refer to https://github.com/InQuest/awesome-yara#rules

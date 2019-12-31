@@ -1,0 +1,11 @@
+Install ClamAV:
+#apt-get update
+#apt-get install clamav clamav-daemon
+
+Update feeds:
+#/etc/init.d/clamav-freshclam stop
+#freshclam
+#/etc/init.d/clamav-freshclam start
+
+Scan a file:
+#clamscan -v ./test.exe
