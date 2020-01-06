@@ -93,3 +93,12 @@ Here are examples:
 #docker cp /root/foo.txt 72ca2488b353:/root/foo.txt
 #docker cp 72ca2488b353:/root/foo.txt /root/foo.txt
 
+
+Show all docker networks:
+#docker network ls
+
+
+Show all network nodes within a network:
+#docker network inspect NETWORK_NAME
+Such as:
+#docker network inspect bridge
