@@ -1,0 +1,86 @@
+Install and Configure HAProxy
+References:
+https://upcloud.com/community/tutorials/haproxy-load-balancer-ubuntu/
+https://tecadmin.net/how-to-setup-haproxy-load-balancing-on-ubuntu-linuxmint/
+
+
+Install HAProxy:
+#apt-get update
+#apt-get install haproxy
+#haproxy -v
+HA-Proxy version 2.0.10-1 2019/11/26 - https://haproxy.org/
+
+
+Configure HAProxy:
+#vi /etc/haproxy/haproxy.cfg
+Add the following content on the very bottom of the haproxy.cfg file:
+--------------------------------------------------
+frontend http_front
+   bind *:80
+   stats uri /haproxy?stats
+   default_backend http_back
+
+backend http_back
+   balance roundrobin
+   server docker1 172.17.0.2:80 check
+   server docker2 172.17.0.3:80 check
+--------------------------------------------------
+
+
+Launch HAProxy:
+#/etc/init.d/haproxy start
+
+
+Check the status of HAProxy:
+Launch a browser and access http://<HAProxy's IP>/haproxy?stats
+
+
+HA algorithms:
+- Roundrobin: Take turns every time.
+- Leastconn: Pick up the one with the least connections.
+- First: Follow the order shown in the configuration file.
+- Source: The source IP address is hashed and divided by the total weight of the running servers.
+
+
+Some configuration examples:
+
+- Layer 4 Regular HTTP Server Balancing:
+--------------------------------------------------
+frontend http_front
+   bind *:80
+   stats uri /haproxy?stats
+   default_backend http_back
+
+backend http_back
+   balance roundrobin
+   server <server1 name> <private IP 1>:80 check
+   server <server2 name> <private IP 2>:80 check
+--------------------------------------------------
+
+- Layer 7 Load Balancing:
+--------------------------------------------------
+frontend http_front
+   bind *:80
+   stats uri /haproxy?stats
+   acl url_blog path_beg /blog
+   use_backend blog_back if url_blog
+   default_backend http_back
+
+backend http_back
+   balance roundrobin
+   server <server name> <private IP>:80 check
+   server <server name> <private IP>:80 check
+
+backend blog_back
+   server <server name> <private IP>:80 check
+--------------------------------------------------
+
+- Having the statistics page shown on a dedicated port with Password-based protection:
+--------------------------------------------------
+listen stats
+   bind *:8181
+   stats enable
+   stats uri /
+   stats realm Haproxy\ Statistics
+   stats auth <username>:<password>
+--------------------------------------------------
