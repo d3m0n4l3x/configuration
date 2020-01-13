@@ -41,6 +41,12 @@ Such as:
 #docker run -t -i metasploitframework/metasploit-framework /bin/bash
 
 
+Run a docker images in background:
+#docker exec -t -d -i IMAGE_NAME
+Such as:
+#docker exec -t -d -i metasploitframework/metasploit-framework
+
+
 Enter a running docker with a shell:
 #docker exec -t -i CONTAINER_ID /bin/bash
 Such as:
