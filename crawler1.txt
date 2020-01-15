@@ -1,0 +1,11 @@
+Three common web crawlers running under Kali Linux
+
+1) SkipFish
+#mkdir -p /usr/local/sbin/skipfish_log; skipfish -o /usr/local/sbin/skipfish_log http://www.163.com; tree -a /usr/local/sbin/skipfish_log; grep -nR test /usr/local/sbin/skipfish_log
+
+2) Metasploit
+msf5>use auxiliary/crawler/msfcrawler
+
+3) HTTrack
+#mkdir -p /usr/local/sbin/httrack_log; httrack http://www.163.com -O /usr/local/sbin/httrack_log; tree -a /usr/local/sbin/httrack_log; grep -nR test /usr/local/sbin/httrack_log
+
