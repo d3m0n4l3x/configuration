@@ -1,0 +1,33 @@
+Utilize HTTrack to crawl Dark Web
+Reference: http://www.httrack.com/html/httrack.man.html
+
+
+Install Tor:
+#apt-get update
+#apt-get install tor
+
+
+Install HTTrack:
+#apt-get install httrack
+
+
+Install Privoxy:
+#apt-get install privoxy
+
+
+Some Preparation:
+#mkdir -p /usr/local/sbin/httrack_log
+#vi /etc/privoxy/config
+---------------------------------
+#Uncomment the following line:
+     forward-socks5t  /  127.0.0.1:9050 .
+#And comment the following line:
+#listen-address [::1]:8118
+#:wq!
+---------------------------------
+
+
+Lauch a scan:
+#/etc/init.d/tor start
+#/etc/init.d/privoxy start
+#httrack "http://gdaqpaukrkqwjop6.onion/" -O "/usr/local/sbin/httrack_log" "+gdaqpaukrkqwjop6.onion/*" -v -P 127.0.0.1:8118 -s0
