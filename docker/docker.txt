@@ -33,6 +33,9 @@ Run a docker: (P.S.: "-d" represents running in the background, and "-P" represe
 And the mapped Transport-Layer port can be specified:
 #docker run -d -p 8443:443 httpd
 The command above maps the docker's TCP443 to the host machine's TCP8443.
+Or you can map multiple ports as shown below:
+#docker run -d -p 443:443 -p 22:22 server1
+The command above maps the docker's TCP443 and TCP22 to the host machine's TCP443 and TCP22, respectively.
 
 
 Run a docker in a shell:
