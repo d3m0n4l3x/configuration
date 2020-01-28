@@ -1,0 +1,12 @@
+[Tor]Specify the Exit Node of Tor
+
+#vi /etc/tor/torrc
+Add the following two lines on the very bottom:
+ExitNodes {br}
+StrictNodes 1
+:wq
+#/etc/init.d/tor restart
+
+Among others, the br above, representing Brazil, is a country code. By using this way, we can confine the exit node in Brazil.
+In terms of more country codes, you can refer to:
+https://en.wikipedia.org/wiki/Country_code_top-level_domain
