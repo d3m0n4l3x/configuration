@@ -1,0 +1,19 @@
+[metasploit][msfconsole]Metasploit Framework Resource Script
+
+
+[Generate a Resource script]
+# msfconsole
+msfconsole> ...
+msfconsole> makerc demonalex.rc
+
+[Resource Script Location]
+# cd /opt/metasploit-framework/embedded/framework/scripts/resource/                                                                                        
+# ll
+
+[Read and Launch a script in Shell]
+# cat /opt/metasploit-framework/embedded/framework/scripts/resource/demonalex.rc
+# msfconsole -r /opt/metasploit-framework/embedded/framework/scripts/resource/demonalex.rc
+
+[Read and Launch a script in Msfconsol]
+msfconsole> more demonalex.rc
+msfconsole> resource demonalex.rc
