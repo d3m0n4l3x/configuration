@@ -1,0 +1,5 @@
+[metasploit][msfconsole] Upgrade Metasploit Framework in Kali Linux (20210530)
+
+#cd ~
+#curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
+#/opt/metasploit-framework/bin/msfconsole
